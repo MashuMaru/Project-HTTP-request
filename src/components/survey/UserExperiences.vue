@@ -11,7 +11,7 @@
       <p v-if="isLoading">Loading...</p>
       <p v-else-if="!isLoading && error">{{ error }}</p>
       <p v-else-if="!isLoading && (!results || results.length === 0)">
-        No stored experiences found. Start adding som experiences first.
+        No stored experiences found. Start adding some experiences first.
       </p>
       <ul v-else>
         <SurveyResult
@@ -70,8 +70,8 @@ export default {
 
           this.results = results;
         })
-        .catch(() => {
-          // console.log(error);
+        .catch((error) => {
+          console.log(error);
           this.isLoading = false;
           this.error = 'Failed to fetch data. Please try again later.';
         });

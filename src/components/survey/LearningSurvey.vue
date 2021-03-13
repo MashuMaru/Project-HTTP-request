@@ -41,6 +41,7 @@
         <p v-if="invalidInput">
           One or more input fields are invalid. Please check your provided data.
         </p>
+        <p v-if="error">{{ error }}</p>
         <div>
           <base-button>Submit</base-button>
         </div>
@@ -55,7 +56,8 @@ export default {
     return {
       enteredName: '',
       chosenRating: null,
-      invalidInput: false
+      invalidInput: false,
+      error: null
     };
   },
   // EMIT THE $EMIT
@@ -73,13 +75,13 @@ export default {
         rating: this.chosenRating
       });
 
-      //IF USING AXIOS DEPENDENCY TO HANDLE HTTP REQUESTS. 
+      //IF USING AXIOS DEPENDENCY TO HANDLE HTTP REQUESTS.
       // import axios from 'axios'; // at the start of your <script> tag, before you "export default ..."
       // axios.post('https://vue-http-demo-85e9e.firebaseio.com/surveys.json', {
       //   name: this.enteredName,
       //   rating: this.chosenRating
       // });
-      
+      this.error = null;
       fetch(
         'https://vue-http-demo-d8f01-default-rtdb.firebaseio.com/surveys.json',
         {
@@ -92,7 +94,18 @@ export default {
             rating: this.chosenRating
           })
         }
-      );
+      )
+        .then(response => {
+          if (response.ok) {
+            //..
+          } else {
+            this.error = 'Could not save data. Format of request is incorrect.';
+          }
+        })
+        .catch(error => {
+          console.log(error);
+          this.error = 'Something went wrong. PleaseTry again later.';
+        });
 
       this.enteredName = '';
       this.chosenRating = null;
