@@ -1,6 +1,7 @@
 <template>
   <learning-survey @survey-submit="storeSurvey"></learning-survey>
   <user-experiences :results="savedSurveyResults"></user-experiences>
+  <!-- REMOVE THE :RESULTS AS BEING HANDLED ON THE SERVER -->
 </template>
 
 <script>
@@ -12,11 +13,13 @@ export default {
     LearningSurvey,
     UserExperiences,
   },
+  //REMOVE THE DATA OBJECT AS BEING HANDLED ON THE SERVER
   data() {
     return {
       savedSurveyResults: [],
     };
   },
+  //REMOVE THE METHOD AS BEING HANDLED ON THE SERVER
   methods: {
     storeSurvey(surveyData) {
       const surveyResult = {
